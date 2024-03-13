@@ -1,0 +1,53 @@
+/*
+    lbu rd, rs1, imm (can't use)
+    
+    lbu rd, imm(rs1)
+
+    rd = *((unsigned char *)(rs1 + imm))
+*/
+.data
+my_array:
+    .word 0x44332211
+    .word 0x88776655
+    .word 0xccbbaa99
+.text
+.globl my_array
+.globl my_start
+my_start:
+    li x1, 0 # x1 = 0
+    li x2, 0 # x2 = 0
+    li x3, 0 # x3 = 0
+    li x4, 0 # x4 = 0
+    li x5, 0 # x5 = 0
+    li x6, 0 # x6 = 0
+    li x7, 0 # x7 = 0
+    li x8, 0 # x8 = 0
+    li x9, 0 # x9 = 0
+    li x10, 0 # x10 = 0
+    li x11, 0 # x11 = 0
+    li x12, 0 # x12 = 0
+    li x13, 0 # x13 = 0
+    li x14, 0 # x14 = 0
+    li x15, 0 # x15 = 0
+
+    la x1, my_array # 
+
+    lbu x2, 0(x1)
+    lbu x3, 1(x1)
+    lbu x4, 2(x1)
+    lbu x5, 3(x1)
+    lbu x6, 4(x1)
+    lbu x7, 5(x1)
+    lbu x8, 6(x1)
+    lbu x9, 7(x1)
+
+    li x15, 0x08000000 # x15 = 0x08000000
+    
+    lw x10, 0(x15) #
+    lw x11, 4(x15) 
+    lw x12, 8(x15) # 
+    
+    
+    c.nop
+
+

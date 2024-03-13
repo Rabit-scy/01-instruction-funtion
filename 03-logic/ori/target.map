@@ -1,0 +1,49 @@
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+FLASH            0x0000000000000000 0x0000000000004000 xr
+RAM              0x0000000020000000 0x0000000000000800 xrw
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+                0x0000000008000000                . = 0x8000000
+
+.text           0x0000000000000000       0x28
+                0x0000000000000000                . = ALIGN (0x4)
+ *(.text*)
+ .text          0x0000000000000000       0x26 ori.S.o
+                0x0000000000000000                my_start
+                0x0000000000000028                . = ALIGN (0x4)
+ *fill*         0x0000000000000026        0x2 
+
+.data           0x0000000020000000        0x0 load address 0x0000000000000028
+                0x0000000020000000                . = ALIGN (0x4)
+ *(.data*)
+ .data          0x0000000020000000        0x0 ori.S.o
+                0x0000000020000000                . = ALIGN (0x4)
+
+.bss            0x0000000020000000        0x0 load address 0x0000000000000028
+                0x0000000020000000                . = ALIGN (0x4)
+ *(.bss*)
+ .bss           0x0000000020000000        0x0 ori.S.o
+                0x0000000020000000                . = ALIGN (0x4)
+LOAD ori.S.o
+OUTPUT(target.elf elf32-littleriscv)
+
+.debug_line     0x0000000000000000       0x9a
+ .debug_line    0x0000000000000000       0x9a ori.S.o
+
+.debug_info     0x0000000000000000       0x26
+ .debug_info    0x0000000000000000       0x26 ori.S.o
+
+.debug_abbrev   0x0000000000000000       0x14
+ .debug_abbrev  0x0000000000000000       0x14 ori.S.o
+
+.debug_aranges  0x0000000000000000       0x20
+ .debug_aranges
+                0x0000000000000000       0x20 ori.S.o
+
+.debug_str      0x0000000000000000       0x57
+ .debug_str     0x0000000000000000       0x57 ori.S.o
