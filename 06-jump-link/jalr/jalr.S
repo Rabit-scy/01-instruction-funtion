@@ -24,7 +24,7 @@ my_start:
    li x14, 0 # x14 = 0
    li x15, 0 # x15 = 0
 
-   jal x1, my_add  # jump to x1, my_add and save position to ra
+   jal x1, my_add  # x1 = pc + 4, pc = my_add
 
  
 
@@ -36,7 +36,7 @@ my_start:
 my_add:
    li x2, 0x2222 # x2 = 0x2222
    
-   jalr x0, 0(x1)  # jump tor target and save position to ra
+   jalr x0, 0(x1)  # x0 = pc +4, pc = ( (x1 + (signed-extend )(0) ) & (~1) )
    
    c.nop
 

@@ -1,0 +1,57 @@
+ENTRY(my_start)
+
+MEMORY
+{
+    /* 16KB LMA*/
+    FLASH : ORIGIN = 0x00000000, LENGTH = 0x4000 
+    /* 2KB VMA*/
+    SRAM(x)  : ORIGIN = 0x20000000, LENGTH = 0x800
+}
+
+
+SECTIONS
+{
+    .text : {
+      . = ALIGN(4) ;
+      *(.text*)
+      . = ALIGN(4) ;
+    } >FLASH AT>FLASH
+    
+    .rodata :{
+      . = ALIGN(4);
+      *(.rodata*)
+      . = ALIGN(4);
+      PROVIDE(_data_section_lma_start = .);
+    } >FLASH AT>FLASH
+
+    /*initialized data*/
+    .data : {
+      PROVIDE(_data_section_vma_start = .);
+      *(.data*)
+      . = ALIGN(4) ;
+      PROVIDE(_data_section_end = .);
+    } >SRAM AT>FLASH
+
+    /* uninitialized data*/
+    .bss : {
+      . = ALIGN(4) ;
+      PROVIDE(_bss_data_start = .);
+      *(.bss*)
+      . = ALIGN(4);
+      PROVIDE(_bss_data_end = .);
+    } >SRAM AT>FLASH
+
+    .my_stack :{
+        . = ALIGN(4);
+        . = ORIGIN(SRAM) + LENGTH(SRAM) - 0x100;
+        PROVIDE(_my_stack_end = .);
+        . = . + 0x100 ;
+        PROVIDE(_my_stack_start = .);
+    } >SRAM AT>SRAM
+
+
+    .program_size :{
+      . = ALIGN(4);
+      PROVIDE(_program_size = .);
+    } >FLASH AT>FLASH
+}
