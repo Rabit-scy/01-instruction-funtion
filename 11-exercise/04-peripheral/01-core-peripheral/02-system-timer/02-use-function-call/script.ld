@@ -1,6 +1,7 @@
 ENTRY(my_start)
 __sram_size = 0x700;
 __stack_size = 0x100;
+OUTPUT_FORMAT("elf32-littleriscv", "elf32-littleriscv","elf32-littleriscv")
 MEMORY
 {
     /* 16KB LMA*/
@@ -12,7 +13,15 @@ MEMORY
     /* STACK(rw) : ORIGIN = 0x20000700, LENGTH = __stack_size */
 }
 
-
+/*
+* gcc has its own linker script file without MEMORY.
+* in the linker file there are many gnu c extended and implement.
+* like startfile which maybe hidden in gcc.
+* linker script file describe the structure of the system in some way.
+* to support GNU C, some section are in need.
+* but now, i'm not already to add them,unless i will use them.
+* 
+ */
 SECTIONS
 {
     .text : {
@@ -32,6 +41,7 @@ SECTIONS
 
     /*initialized data*/
     .data : {
+      . = ALIGN(4) ;
       PROVIDE(_data_section_vma_start = .);
       *(.data*)
       . = ALIGN(4) ;
