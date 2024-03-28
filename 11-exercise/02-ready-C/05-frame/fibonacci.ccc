@@ -1,0 +1,19 @@
+
+
+int fibonacci(int n) {
+  int t, s;
+  if (n < 2) {
+    return 1;
+  }
+  s = fibonacci(n - 1);
+  t = fibonacci(n - 2);
+  return s + t;
+}
+int main(void) {
+  // int n = 10;
+  int result = 0;
+
+  result = fibonacci(10);
+
+  return result;
+}

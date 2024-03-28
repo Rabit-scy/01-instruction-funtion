@@ -1,4 +1,10 @@
 /*
+    about caller and callee see <Compilation Principle>,
+    at Chapter 7 Run-Time Environment.
+    in directory 05-frame i will do some exercises.
+*/
+
+/*
 * this exercise is help me to understand the relationship between caller and callee.
 * subconsciously, i think function call like this:
 * the my_caller push register(Caller) to stack
@@ -9,6 +15,10 @@
 * which means arguments is my_caller's Caller register.
 */
 
+/*
+    maybe the attribute of caller and callee is not explicitly.optimize level will
+    affect this.
+*/
 .globl my_caller
 .type my_caller, @function
 my_caller:
